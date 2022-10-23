@@ -1,4 +1,4 @@
-import { component$ } from '@builder.io/qwik';
+import { component$, $ } from '@builder.io/qwik';
 import type { DocumentHead } from '@builder.io/qwik-city';
 import { Link } from '@builder.io/qwik-city';
 
@@ -7,7 +7,7 @@ import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-import { getDatabase, ref, onValue } from 'firebase/database';
+import { getDatabase, ref, set, onValue } from 'firebase/database';
 
 export default component$(() => {
   // Your web app's Firebase configuration
@@ -31,11 +31,23 @@ export default component$(() => {
     'hi', 'ho', 'hee'
   ]
 
+  const addItem = $(() => {
+    // todo.push('item')
+    // const ans = [ ...todo]
+    // set(ref(db, 'todo'), todo)
+  })
+
+  onValue(ref(db, 'todo'), (snapshot) => {
+    const data = snapshot.val()
+    todo = [...data]
+    // vm.logged('wdpXGWEUObY7miKsK5hH5qDjkJ43', 'bestian@gmail.com')
+  })
+
   return (
     <div>
       <h1>
         Welcome to Qwik <span class="lightning">⚡️</span>
-        <ul>
+        <ul id = "my">
         {todo.map((o) => (
           <li>
             {o}
